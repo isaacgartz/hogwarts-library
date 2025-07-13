@@ -13,5 +13,16 @@ class Books(db.Model):
     subject = db.Column(db.String())
     rarity_level = db.Column(db.Integer())
     magical_properties = db.Column(db.String())
-    available = db.Column(db.Boolean(), default=True)
     school_id = db.Column(UUID(as_uuid=True), db.ForeignKey("Schools.school_id"), nullable=False)
+    available = db.Column(db.Boolean(), default=True)
+
+    school = db.relationship("Schools", foreign_keys='[Books.school_id]', back_populates='books')
+
+    def __init__(self, title, author, subject, rarity_level, magical_properties, school_id, available):
+        self.title = title
+        self.author = author
+        self.subject = subject
+        self.rarity_level = rarity_level
+        self.magical_properties = magical_properties
+        self.school_id = school_id
+        self.available = available
